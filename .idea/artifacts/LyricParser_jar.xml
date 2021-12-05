@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="LyricParser:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/LyricParser_jar</output-path>
+    <root id="archive" name="LyricParser.jar">
+      <element id="module-output" name="LyricParser" />
+    </root>
+  </artifact>
+</component>
