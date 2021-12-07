@@ -41,23 +41,26 @@ public class LyricParser {
     /**
      *        初始化解析器
      * @param lyricFile lrc文件
-     * @param isHighPrecision 是否启用高精度。低精度：00:00.00,高精度：00:00.000
+     * @param isHighPrecision 是否启用高精度。低精度：[00:00.00],高精度：[00:00.000]
      * @param charset
      */
     @SneakyThrows
     public LyricParser(File lyricFile, boolean isHighPrecision, Charset charset) {
         List<String> lines = Files.readAllLines(lyricFile.toPath(), charset);
 
-        timeLine = lines.parallelStream().
-                map(s -> s.substring(1, s.indexOf(']')))
-                .filter(this::isTimeLine)
-                .toArray(String[]::new);
-
         if (isHighPrecision){
+            timeLine = lines.parallelStream().
+                    map(s -> s.substring(1, 10))
+                    .filter(this::isTimeLine)
+                    .toArray(String[]::new);
             lyric = lines.parallelStream().
                     map(s -> s.substring(11))
                     .toArray(String[]::new);
         }else {
+            timeLine = lines.parallelStream().
+                    map(s -> s.substring(1, 9))
+                    .filter(this::isTimeLine)
+                    .toArray(String[]::new);
             lyric = lines.parallelStream().
                     map(s -> s.substring(10))
                     .toArray(String[]::new);
