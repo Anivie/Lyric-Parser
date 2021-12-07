@@ -34,8 +34,8 @@ import java.time.Duration;
 public class MainView extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        MediaPlayer player = new MediaPlayer(new Media(new File("C:\\Users\\Anivie\\Desktop\\b.mp3").toURI().toString()));
-        LyricParser parser = new LyricParser(new File("C:\\Users\\Anivie\\Desktop\\b.lrc"), StandardCharsets.UTF_8);
+        MediaPlayer player = new MediaPlayer(new Media(new File("b.mp3").toURI().toString()));
+        LyricParser parser = new LyricParser(new File("b.lrc"), StandardCharsets.UTF_8);
         Duration[] duration = parser.getTimeLineWithDuration();
         String[] lyrics = parser.getLyric();
         final int[] index = {0};
