@@ -18,17 +18,51 @@ public class LyricParser {
     private final String[] timeLine;
     private final String[] lyric;
 
+    /**
+     *        初始化解析器，这个构造方法将自适应精度
+     * @param lyricFile lrc文件
+     * @param charset
+     */
     @SneakyThrows
-    public LyricParser(File lyricFile, Charset charset) {
+    public LyricParser(File lyricFile,Charset charset) {
         List<String> lines = Files.readAllLines(lyricFile.toPath(), charset);
 
         timeLine = lines.parallelStream().
-                map(s -> s.substring(1, s.indexOf("]")))
+                map(s -> s.substring(1, s.indexOf(']')))
                 .filter(this::isTimeLine)
                 .toArray(String[]::new);
         lyric = lines.parallelStream().
-                map(s -> s.substring(s.indexOf("]") + 1))
+                map(s -> s.substring(s.indexOf(']') + 1))
                 .toArray(String[]::new);
+        lines = null;
+    }
+
+
+    /**
+     *        初始化解析器
+     * @param lyricFile lrc文件
+     * @param isHighPrecision 是否启用高精度。低精度：00:00.00,高精度：00:00.000
+     * @param charset
+     */
+    @SneakyThrows
+    public LyricParser(File lyricFile, boolean isHighPrecision, Charset charset) {
+        List<String> lines = Files.readAllLines(lyricFile.toPath(), charset);
+
+        timeLine = lines.parallelStream().
+                map(s -> s.substring(1, s.indexOf(']')))
+                .filter(this::isTimeLine)
+                .toArray(String[]::new);
+
+        if (isHighPrecision){
+            lyric = lines.parallelStream().
+                    map(s -> s.substring(11))
+                    .toArray(String[]::new);
+        }else {
+            lyric = lines.parallelStream().
+                    map(s -> s.substring(10))
+                    .toArray(String[]::new);
+        }
+
         lines = null;
     }
 
