@@ -11,7 +11,7 @@ A parser for lrc files, when i try to write a music player,i can't find a suitab
 
 This parser pays more attention to the pursuit of performance
 
-Compared with the first version, this version can adapt to the standard lrc format and various fancy variants, because there are too many lrc files downloaded by music platforms. The standard 00:00.00 has been changed to various styles. As a result, ordinary string segmentation often makes mistakes, so I finally decided to choose such an algorithm
+Compared with the first version, this version can adapt to the standard lrc format and various fancy variants, because there are too many lrc format downloaded by music platforms. The standard 00:00.00 has been changed to various styles. As a result, ordinary string segmentation often makes mistakes, so I finally decided to choose such an algorithm
 
 This parser has been confirmed to work properly with JavaFx MediaPlayer, other aspects are welcome to test by yourself
 
