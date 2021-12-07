@@ -14,3 +14,36 @@ This parser pays more attention to the pursuit of performance
 Compared with the first version, this version can adapt to the standard lrc format and various fancy variants, because there are too many lrc files downloaded by music platforms. The standard 00:00.00 has been changed to various styles. As a result, ordinary string segmentation often makes mistakes, so I finally decided to choose such an algorithm
 
 This parser has been confirmed to work properly with JavaFx MediaPlayer, other aspects are welcome to test by yourself
+
+Simple Demo:
+```
+import LyricParser.LyricParser;
+import javafx.application.Application;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
+
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+
+/**
+ * @author Anivie
+ * Use:JavaFx17.0.1
+ */
+public class MainView extends Application {
+    @Override
+    public void start(Stage stage) throws Exception {
+        MediaPlayer player = new MediaPlayer(new Media(new File("C:\\Users\\Anivie\\Desktop\\b.mp3").toURI().toString()));
+        LyricParser parser = new LyricParser(new File("C:\\Users\\Anivie\\Desktop\\b.lrc"), StandardCharsets.UTF_8);
+        Duration[] duration = parser.getTimeLineWithDuration();
+        String[] lyrics = parser.getLyric();
+        final int[] index = {0};
+        player.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.toMillis() < duration[index[0]].toMillis()) return;
+            System.out.println(lyrics[index[0]++]);
+        });
+        player.play();
+    }
+}
+```
