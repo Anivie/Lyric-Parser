@@ -71,17 +71,18 @@ public class LyricParser {
         lines = null;
     }
 
+
     public int[] getTimeLineWithArray() {
-        int[] back = new int[timeLine.length];
-        for (int i = 0; i < timeLine.length; i++) back[i] = Integer.parseInt(timeLine[i].substring(0,2)) * 60000 + Integer.parseInt(timeLine[i].substring(3,5)) * 1000 + Integer.parseInt(timeLine[i].substring(6));
-        return back;
+        return Arrays.stream(timeLine)
+                .parallel()
+                .mapToInt(line -> Integer.parseInt(line.substring(0,2)) * 60000 + Integer.parseInt(line.substring(3,5)) * 1000 + Integer.parseInt(line.substring(6)))
+                .toArray();
     }
 
     public Duration[] getTimeLineWithDuration() {
-        Duration[] back = new Duration[timeLine.length];
-        int[] time = getTimeLineWithArray();
-        for (int i = 0; i < timeLine.length; i++) back[i] = Duration.ofMillis(time[i]);
-        return back;
+        return IntStream.of(getTimeLineWithArray()).parallel()
+                .mapToObj(Duration::ofMillis)
+                .toArray(Duration[]::new);
     }
 
     public String[] getLyric() {
